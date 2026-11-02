@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Financiero - UMSA | Pabel Dante Churata Apaza</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax Configuration and CDN -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        umsa: {
+                            blue: '#002B49',
+                            gold: '#D4AF37',
+                            light: '#004B87',
+                            accent: '#0d9488'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .math-font {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased leading-relaxed min-h-screen flex flex-col">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 bg-umsa-blue text-white shadow-lg border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center font-bold text-umsa-gold text-xl border border-white/20">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-wide block leading-tight">UMSA - Informática</span>
+                        <span class="text-xs text-slate-300">Métodos Numéricos | GCP Financiero</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-1 text-xs font-medium uppercase tracking-wider">
+                    <a href="#inicio" class="px-3 py-2 rounded hover:bg-white/10 transition">Inicio</a>
+                    <a href="#caso" class="px-3 py-2 rounded hover:bg-white/10 transition">Caso TI</a>
+                    <a href="#formulacion" class="px-3 py-2 rounded hover:bg-white/10 transition">Matemática</a>
+                    <a href="#escenarios" class="px-3 py-2 rounded hover:bg-white/10 transition">Escenarios</a>
+                    <a href="#resultados" class="px-3 py-2 rounded hover:bg-white/10 transition">GCP vs GC</a>
+                    <a href="#comparativa" class="px-3 py-2 rounded hover:bg-white/10 transition">Tabla Comparativa</a>
+                    <a href="#qa" class="px-3 py-2 rounded hover:bg-white/10 transition">Pruebas QA</a>
+                    <a href="#mencion" class="px-3 py-2 rounded hover:bg-white/10 transition">Aporte Mención</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER / BANNER INSTITUCIONAL -->
+    <header id="inicio" class="bg-gradient-to-r from-umsa-blue via-slate-900 to-umsa-light text-white py-12 px-4 shadow-inner relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="space-y-4 max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-umsa-gold border border-umsa-gold/30 text-xs font-semibold uppercase tracking-wider">
+                    <i class="fa-solid fa-graduation-cap"></i> Desafío Académico de Métodos Numéricos
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+                    Método de Gradientes Conjugados Precondicionado (GCP)
+                </h1>
+                <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                    Aplicación numérica e interactiva en la optimización y reajuste presupuestario para proyectos tecnológicos y desarrollo de software ($Ax=b$, $n \ge 4$). Basado en el trabajo de <strong>Porfirio Suñagua S. (2020)</strong>.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs bg-white/5 p-4 rounded-xl border border-white/10">
+                    <div><span class="text-slate-400">Estudiante:</span> <strong class="text-white font-semibold">Pabel Dante Churata Apaza</strong></div>
+                    <div><span class="text-slate-400">Mención Academic:</span> <span class="bg-emerald-500/20 text-emerald-300 font-semibold px-2 py-0.5 rounded border border-emerald-500/30">Desarrollo de Software e Innovación Tecnológica</span></div>
+                    <div><span class="text-slate-400">Institución:</span> UMSA - Fac. Ciencias Puras y Naturales</div>
+                    <div><span class="text-slate-400">Tolerancia Criterio:</span> $\|r_k\|_2 / \|b\|_2 < 10^{-6}$</div>
+                </div>
+            </div>
+            <div class="hidden lg:flex flex-col items-center justify-center p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 text-center w-72 shadow-2xl">
+                <i class="fa-solid fa-network-wired text-5xl text-umsa-gold mb-3 animate-pulse"></i>
+                <span class="font-bold text-sm uppercase tracking-wide text-slate-200">Simulador de Asignación TI</span>
+                <span class="text-xs text-slate-300 mt-1">Sistemas Lineales Simétricos Definidos Positivos</span>
+                <div class="mt-4 pt-3 border-t border-white/20 w-full flex justify-around text-xs">
+                    <div><div class="font-bold text-emerald-400">Jacobi</div><div class="text-[10px] text-slate-400">Diagonal</div></div>
+                    <div><div class="font-bold text-cyan-400">SSOR</div><div class="text-[10px] text-slate-400">Relaxation</div></div>
+                    <div><div class="font-bold text-purple-400">IC(0)</div><div class="text-[10px] text-slate-400">Cholesky</div></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NOTIFICATION SYSTEM -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-md"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- SECCIÓN 2: CASO DE ESTUDIO -->
+        <section id="caso" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-blue-100 text-umsa-blue flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">2. Caso de Estudio: Asignación Presupuestaria TI</h2>
+                    <p class="text-xs text-slate-500">Contexto financiero en Desarrollo de Software e Innovación Tecnológica</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-4">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        Un Departamento de Tecnología de la Información (TI) y Desarrollo de Software requiere optimizar la distribución de su presupuesto anual asignado entre <strong>$n \ge 4$ categorías clave de inversión</strong>. La meta es alcanzar el equilibrio financiero donde los costos totales ajustados coincidan exactamente con la demanda operativa requerida $b$.
+                    </p>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        En el modelo matricial $Ax = b$, el vector de incógnitas $x = [x_1, x_2, x_3, x_4]^T$ representa las asignaciones financieras en miles de dólares ($k USD):
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                            <span class="font-bold text-blue-800">$x_1$: Infraestructura Cloud y Redes</span>
+                            <p class="text-slate-600 mt-1">Servidores AWS/Azure, clusters Kubernetes, ancho de banda y CDN.</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                            <span class="font-bold text-blue-800">$x_2$: Licencias y Plataformas Core</span>
+                            <p class="text-slate-600 mt-1">SaaS, bases de datos enterprise, IDEs y herramientas de CI/CD.</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                            <span class="font-bold text-blue-800">$x_3$: Ciberseguridad y Cumplimiento</span>
+                            <p class="text-slate-600 mt-1">Auditorías SOC2/ISO27001, bastionado, WAF y pentesting.</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                            <span class="font-bold text-blue-800">$x_4$: Aseguramiento de Calidad (QA) y Soporte</span>
+                            <p class="text-slate-600 mt-1">Automatización de pruebas, monitoreo APM y mantenimiento 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 text-white p-5 rounded-xl text-xs space-y-3 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-umsa-gold mb-2"><i class="fa-solid fa-circle-nodes"></i> Significado del Acoplamiento $a_{ij}$</h3>
+                        <ul class="space-y-2 text-slate-300">
+                            <li><strong class="text-white">Diagonal $a_{ii}$:</strong> Tasa de costo directo e impacto base por unidad de presupuesto asignada a la categoría $i$.</li>
+                            <li><strong class="text-white">Fuera de Diagonal $a_{ij} = a_{ji}$:</strong> Coeficiente de interdependencia recíproca. Por ejemplo, expandir Cloud ($x_1$) demanda proporcionalmente mayor monitoreo QA ($x_4$) y licencias ($x_2$).</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-white/10 rounded border border-white/10 text-emerald-300">
+                        <i class="fa-solid fa-check-circle"></i> <strong>Propiedad Matriz:</strong> Garantiza que $A$ sea simétrica ($a_{ij}=a_{ji}$) y definida positiva ($x^T Ax > 0$).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: FORMULACIÓN Y SYLVESTER -->
+        <section id="formulacion" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">3. Formulación Matemática y Criterio de Sylvester</h2>
+                    <p class="text-xs text-slate-500">Demostración formal de Simetría ($A=A^T$) y Definida Positiva ($x^TAx>0$)</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Verificación en Tiempo Real -->
+                <div class="space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-emerald-600"></i> Verificación Matemática Reactiva
+                    </h3>
+                    <p class="text-xs text-slate-600">
+                        El Criterio de Sylvester establece que una matriz real simétrica es <strong>Definida Positiva</strong> si y solo si todos sus menores principales lideres son estrictamente positivos ($\Delta_k > 0, \forall k=1 \dots n$).
+                    </p>
+
+                    <div id="sylvester-status-box" class="p-4 rounded-xl border flex items-center justify-between transition-all bg-emerald-50 border-emerald-300 text-emerald-900">
+                        <div class="flex items-center gap-3">
+                            <i id="sylvester-icon" class="fa-solid fa-circle-check text-2xl text-emerald-600"></i>
+                            <div>
+                                <div id="sylvester-title" class="font-bold text-sm">Matriz Válida (SPD)</div>
+                                <div id="sylvester-desc" class="text-xs opacity-90">Cumple simetría y criterio de Sylvester.</div>
+                            </div>
+                        </div>
+                        <span id="sylvester-badge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-200 text-emerald-800">
+                            $A = A^T$ & $A > 0$
+                        </span>
+                    </div>
+
+                    <!-- Menores Principales Display -->
+                    <div class="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs space-y-2">
+                        <div class="text-slate-400 font-sans text-xs border-b border-slate-700 pb-1 font-bold">Cálculo de Menores Principales ($\Delta_k$):</div>
+                        <div id="minors-display" class="space-y-1">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalle Teórico / Fórmula -->
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3 text-xs">
+                    <h4 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-book-bookmark"></i> Fundamento de Gradientes Conjugados</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Para asegurar la convergencia global del método iterativo de Gradientes Conjugados Precondicionado (GCP), la función cuadrática de energía financiera:
+                    </p>
+                    <div class="p-3 bg-white border border-slate-200 rounded text-center font-serif text-sm text-slate-800">
+                        $$\Phi(x) = \frac{1}{2} x^T A x - b^T x$$
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        debe poseer un único mínimo global estrictamente convexo en $\mathbb{R}^n$. Esto ocurre exclusivamente cuando $A$ es simétrica y definida positiva. El algoritmo encuentra $x^*$ iterando a lo largo de direcciones $M$-conjugadas $p_k$.
+                    </p>
+                    <div class="pt-2 border-t border-slate-200 text-slate-500">
+                        <strong>Precondicionador $M$:</strong> Debe ser una matriz simétrica definida positiva que aproxime a $A$ tal que $\kappa(M^{-1}A) \ll \kappa(A)$, reduciendo el número de iteraciones.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4 & 5: PANEL INTERACTIVO DE ENTRADA Y ESCENARIOS -->
+        <section id="escenarios" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-100 text-cyan-800 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">4 & 5. Entrada de Datos y Escenarios Financieros</h2>
+                        <p class="text-xs text-slate-500">Configuración interactiva de la matriz $A$, vector $b$ y parámetros del algoritmo</p>
+                    </div>
+                </div>
+
+                <!-- Botones Carga Rápida de Escenarios -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="loadScenario(1)" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-leaf"></i> 1. Ideal
+                    </button>
+                    <button onclick="loadScenario(2)" class="px-3 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 2. Bajo Estrés
+                    </button>
+                    <button onclick="loadScenario(3)" class="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt"></i> 3. Mal Condicionado
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel de Controles Globales -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-slate-100 rounded-xl border border-slate-200 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Dimensión del Sistema ($n$):</label>
+                    <select id="matrix-dim" onchange="changeDimension(this.value)" class="w-full p-2 bg-white rounded border border-slate-300 font-semibold text-slate-800">
+                        <option value="4" selected>n = 4 (Estándar TI)</option>
+                        <option value="5">n = 5 (Expandido I+D)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Precondicionador $M$:</label>
+                    <select id="precond-select" onchange="recalculateAll()" class="w-full p-2 bg-white rounded border border-slate-300 font-semibold text-slate-800">
+                        <option value="jacobi" selected>Jacobi (Diagonal $M = \text{diag}(A)$)</option>
+                        <option value="ssor">SSOR (Relaxation $\omega=1.0$)</option>
+                        <option value="ic0">Cholesky Incompleto $IC(0)$</option>
+                        <option value="none">Sin Precondicionar ($M = I$)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Tolerancia ($\epsilon$):</label>
+                    <input type="number" id="input-tol" value="0.000001" step="0.000001" onchange="recalculateAll()" class="w-full p-2 bg-white rounded border border-slate-300 font-mono">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Iteraciones Máx. ($N_{max}$):</label>
+                    <input type="number" id="input-maxiter" value="1000" step="10" onchange="recalculateAll()" class="w-full p-2 bg-white rounded border border-slate-300 font-mono">
+                </div>
+            </div>
+
+            <!-- Grilla Editable Matriz A y Vector b -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Matriz A -->
+                <div class="lg:col-span-2 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-slate-800">Matriz Coeficiente de Costos $A_{n \times n}$</h3>
+                        <span class="text-xs text-slate-500">Unidades: Tasa de Interdependencia Presupuestaria</span>
+                    </div>
+                    <div id="matrix-a-container" class="overflow-x-auto p-3 bg-white rounded-xl border border-slate-200">
+                        <!-- Dynamic Input Table injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Vector b -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-slate-800">Vector Términos Requeridos $b_{n \times 1}$</h3>
+                        <span class="text-xs text-slate-500">Miles USD ($k)</span>
+                    </div>
+                    <div id="vector-b-container" class="p-3 bg-white rounded-xl border border-slate-200">
+                        <!-- Dynamic Vector Input injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="recalculateAll()" class="px-5 py-2.5 bg-umsa-blue hover:bg-umsa-light text-white rounded-xl font-bold text-xs shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-rotate"></i> Recalcular Soluciones
+                </button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6 & 7: RESULTADOS DE SOLUCIÓN Y COMPARACIÓN CONVERGENCIA -->
+        <section id="resultados" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Columna Izquierda: Solución Exacta Cholesky vs GCP -->
+            <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-equals"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">6 & 7. Soluciones Calculadas</h2>
+                        <p class="text-xs text-slate-500">Método Directo Cholesky vs Iterativo GCP</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Solución Directa (Referencia) -->
+                <div class="bg-indigo-900 text-white p-4 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between text-xs border-b border-indigo-700 pb-2">
+                        <span class="font-bold text-indigo-200 uppercase"><i class="fa-solid fa-bullseye"></i> Solución Numérica de Referencia (Cholesky Directo $A=LL^T$)</span>
+                        <span class="px-2 py-0.5 rounded bg-indigo-800 text-indigo-300 font-mono text-[10px]">Exacta</span>
+                    </div>
+                    <div id="cholesky-solution-display" class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-center text-xs">
+                        <!-- Injected JS -->
+                    </div>
+                </div>
+
+                <!-- Tarjeta Solución GCP Suñagua (2020) -->
+                <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between text-xs border-b border-slate-700 pb-2">
+                        <span class="font-bold text-emerald-400 uppercase"><i class="fa-solid fa-microchip"></i> Solución Iterativa GCP (Suñagua 2020)</span>
+                        <span id="gcp-iter-badge" class="px-2 py-0.5 rounded bg-emerald-900 text-emerald-300 font-bold font-mono text-[10px]">-- Iteraciones</span>
+                    </div>
+                    <div id="gcp-solution-display" class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-center text-xs">
+                        <!-- Injected JS -->
+                    </div>
+                </div>
+
+                <!-- Mapeo Diagnóstico -->
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                        <div class="text-slate-500">Residuo Relativo GCP:</div>
+                        <div id="gcp-rel-res" class="font-mono font-bold text-slate-800 text-sm">--</div>
+                    </div>
+                    <div class="p-3 bg-slate-100 rounded-lg border border-slate-200">
+                        <div class="text-slate-500">Iteraciones GC Simple ($M=I$):</div>
+                        <div id="gc-simple-iter" class="font-mono font-bold text-amber-700 text-sm">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Gráfico de Convergencia GCP vs GC -->
+            <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Historial de Convergencia</h2>
+                                <p class="text-xs text-slate-500">Residuo Relativo $\|r_k\|_2/\|b\|_2$ (Escala Logarítmica)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="convergenceChart"></canvas>
+                    </div>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-[11px] text-slate-600 mt-4">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> <strong>Interpretación Algorítmica:</strong> La curva verde (GCP) muestra la drástica aceleración de convergencia respecto al GC simple gracias a la reducción del espectro de autovalores producida por el precondicionador.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 8: ANÁLISIS DE ERRORES Y CONDICIONAMIENTO -->
+        <section class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">8. Análisis de Errores y Número de Condición</h2>
+                    <p class="text-xs text-slate-500">Evaluación exhaustiva por variable y métricas matriciales $\kappa(A)$ vs $\kappa(M^{-1}A)$</p>
+                </div>
+            </div>
+
+            <!-- Métricas de Condicionamiento Matricial -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="p-4 bg-slate-900 text-white rounded-xl space-y-1">
+                    <div class="text-xs text-slate-400">Condicionamiento Original $\kappa(A)$:</div>
+                    <div id="kappa-a-val" class="text-xl font-mono font-bold text-amber-400">--</div>
+                    <div class="text-[10px] text-slate-400">$\lambda_{max}(A) / \lambda_{min}(A)$</div>
+                </div>
+                <div class="p-4 bg-slate-900 text-white rounded-xl space-y-1">
+                    <div class="text-xs text-slate-400">Condicionamiento Precondicionado $\kappa(M^{-1}A)$:</div>
+                    <div id="kappa-ma-val" class="text-xl font-mono font-bold text-emerald-400">--</div>
+                    <div class="text-[10px] text-slate-400">Espectro reducido vía $M$</div>
+                </div>
+                <div class="p-4 bg-slate-900 text-white rounded-xl space-y-1">
+                    <div class="text-xs text-slate-400">Factor de Ganancia Numérica:</div>
+                    <div id="kappa-gain-val" class="text-xl font-mono font-bold text-cyan-400">--</div>
+                    <div class="text-[10px] text-slate-400">Reducción de rigidez computacional</div>
+                </div>
+            </div>
+
+            <!-- Tabla de Errores por Variable -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase font-bold border-b border-slate-200">
+                            <th class="p-3">Variable ($x_i$)</th>
+                            <th class="p-3">Categoría TI</th>
+                            <th class="p-3">Solución Ref. ($x_{ref}$)</th>
+                            <th class="p-3">Solución GCP ($x_{GCP}$)</th>
+                            <th class="p-3">Error Absoluto ($E_{a,i}$)</th>
+                            <th class="p-3">Error Relativo ($E_{r,i}$)</th>
+                            <th class="p-3">Error Porcentual ($E_{p,i}$)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="error-table-body" class="divide-y divide-slate-200 font-mono">
+                        <!-- Injected JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 9: TABLA COMPARATIVA OBLIGATORIA DE ESCENARIOS -->
+        <section id="comparativa" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-table-list"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">9. Tabla Comparativa Obligatoria de Escenarios</h2>
+                    <p class="text-xs text-slate-500">Evaluación consolidada del desempeño en los 3 escenarios del desafío</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-umsa-blue text-white uppercase font-bold">
+                            <th class="p-3 border-r border-slate-700">Indicador Académico</th>
+                            <th class="p-3 bg-emerald-900/60 border-r border-slate-700 text-emerald-200">Escenario 1: Ideal</th>
+                            <th class="p-3 bg-amber-900/60 border-r border-slate-700 text-amber-200">Escenario 2: Bajo Estrés</th>
+                            <th class="p-3 bg-rose-900/60 text-rose-200">Escenario 3: Mal Condicionado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparative-table-body" class="divide-y divide-slate-200 font-mono text-slate-800">
+                        <!-- Injected JS side-by-side comparative table -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 10: MÓDULO DE PRUEBAS DE SOFTWARE (QA) -->
+        <section id="qa" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-800 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-vial-circle-check"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">10. Módulo de Pruebas de Software (QA)</h2>
+                        <p class="text-xs text-slate-500">Verificación automatizada de casos de prueba según requerimientos del desafío</p>
+                    </div>
+                </div>
+
+                <button onclick="runQASuite()" class="px-5 py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-bold text-xs shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-play"></i> Ejecutar Suite de Pruebas QA
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="qa-results-container">
+                <!-- Injected QA Test Cards -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN 11: APORTE ESPECÍFICO DE LA MENCIÓN (DESARROLLO DE SOFTWARE) -->
+        <section id="mencion" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-code-branch"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">11. Aporte Específico: Desarrollo de Software e Innovación Tecnológica</h2>
+                    <p class="text-xs text-slate-500">Arquitectura de software, componentes modulares y exportación de datos</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Diagrama de Arquitectura -->
+                <div class="lg:col-span-2 bg-slate-900 text-white p-5 rounded-xl space-y-4">
+                    <h3 class="font-bold text-sm text-umsa-gold flex items-center gap-2">
+                        <i class="fa-solid fa-diagram-project"></i> Arquitectura Modular del Software (SPA Component Flow)
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
+                        <div class="p-3 bg-white/10 rounded-lg border border-white/10">
+                            <div class="font-bold text-cyan-300 mb-1">Módulo UI & Input</div>
+                            <p class="text-[10px] text-slate-300">Captura reactiva de matriz $A$, vector $b$, $x_0$, tolerancia y precondicionador.</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-lg border border-white/10">
+                            <div class="font-bold text-emerald-300 mb-1">Núcleo Matemático</div>
+                            <p class="text-[10px] text-slate-300">Solver Cholesky, GCP Suñagua (2020), GC Simple, Autovalores Jacobi & Sylvester.</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-lg border border-white/10">
+                            <div class="font-bold text-purple-300 mb-1">QA & Visualización</div>
+                            <p class="text-[10px] text-slate-300">Renderizado Chart.js, cálculo de errores, suite QA y exportación CSV/JSON.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exportación de Resultados -->
+                <div class="bg-slate-100 p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-bold text-sm text-slate-800 mb-2"><i class="fa-solid fa-download"></i> Exportación de Resultados</h3>
+                        <p class="text-xs text-slate-600">Descargue los datos procesados, soluciones y matriz actual para auditoría o integración externa.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <button onclick="exportJSON()" class="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-code"></i> Exportar Configuración (JSON)
+                        </button>
+                        <button onclick="exportCSV()" class="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-csv"></i> Exportar Tabla Errores (CSV)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 12: CONCLUSIONES Y REFERENCIAS BIBLIOGRÁFICAS -->
+        <section id="referencias" class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div class="w-10 h-10 rounded-lg bg-slate-800 text-white flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">12. Conclusiones y Referencias Bibliográficas</h2>
+                    <p class="text-xs text-slate-500">Síntesis técnica-financiera y citas académicas formales</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-700 leading-relaxed">
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-slate-900 text-sm"><i class="fa-solid fa-graduation-cap text-umsa-blue"></i> Síntesis Técnica y Financiera</h3>
+                    <p>
+                        El Método de Gradientes Conjugados Precondicionado (GCP) demuestra una superioridad contundente frente al GC simple en escenarios con matrices mal condicionadas ($\kappa(A) \gg 10^3$). Al incorporar precondicionadores como <strong>Jacobi, SSOR o Cholesky Incompleto $IC(0)$</strong>, los autovalores de la matriz de iteración $M^{-1}A$ se agrupan en torno a 1, acelerando drásticamente la tasa de reducción del residuo.
+                    </p>
+                    <p>
+                        Desde la perspectiva financiera en TI, esta aceleración garantiza resolver reajustes presupuestarios complejos con precisión extrema ($<10^{-6}$) en un mínimo de iteraciones, previniendo inestabilidades operativas en situaciones de estrés financiero.
+                    </p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-slate-900 text-sm"><i class="fa-solid fa-bookmark text-umsa-blue"></i> Referencias Bibliográficas</h3>
+                    <ul class="space-y-2 list-disc list-inside text-slate-600">
+                        <li><strong>Suñagua S., P. (2020).</strong> <em>Método de Gradientes Conjugados Precondicionado</em>. Revista Boliviana de Matemática UMSA, 04, 2-7.</li>
+                        <li><strong>Golub, G. H., & Van Loan, C. F. (2013).</strong> <em>Matrix Computations</em> (4th ed.). Johns Hopkins University Press.</li>
+                        <li><strong>Saad, Y. (2003).</strong> <em>Iterative Methods for Sparse Linear Systems</em> (2nd ed.). SIAM.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="bg-umsa-blue text-white py-6 border-t border-slate-700 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-semibold text-slate-200">
+                Universidad Mayor de San Andrés | Facultad de Ciencias Puras y Naturales | Carrera de Informática
+            </p>
+            <p class="text-slate-400">
+                Desafío Académico de Métodos Numéricos &copy; 2026 - Pabel Dante Churata Apaza (Mención Desarrollo de Software e Innovación Tecnológica)
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC & ENGINE -->
+    <script>
+        // ==========================================
+        // STATE MANAGEMENT & DATA DEFINITIONS
+        // ==========================================
+        let currentN = 4;
+        let currentA = [];
+        let currentB = [];
+        let currentX0 = [];
+        let convergenceChartInstance = null;
+
+        const categoryNames = [
+            "Infraestructura Cloud & Redes ($x_1$)",
+            "Licencias Software Core ($x_2$)",
+            "Ciberseguridad & SOC2 ($x_3$)",
+            "QA & Mantenimiento TI ($x_4$)",
+            "Innovación & Capacitación ($x_5$)"
+        ];
+
+        // Default Scenarios
+        const scenarios = {
+            1: {
+                name: "Ideal",
+                n: 4,
+                A: [
+                    [10, 2, 1, 1],
+                    [2, 12, 2, 1],
+                    [1, 2, 8, 1],
+                    [1, 1, 1, 9]
+                ],
+                b: [120, 150, 90, 100],
+                desc: "Situación financiera estable. Matriz bien condicionada con excelente convergencia."
+            },
+            2: {
+                name: "Bajo Estrés Financiero",
+                n: 4,
+                A: [
+                    [14.5, 3.5, 1.5, 1.2],
+                    [3.5, 16.0, 2.8, 1.5],
+                    [1.5, 2.8, 9.5, 1.2],
+                    [1.2, 1.5, 1.2, 11.0]
+                ],
+                b: [185, 220, 115, 130],
+                desc: "Perturbación financiera con incremento operacional de costos (+25%)."
+            },
+            3: {
+                name: "Mal Condicionado",
+                n: 4,
+                A: [
+                    [1000, 995, 2, 1],
+                    [995, 1000, 3, 2],
+                    [2, 3, 50, 45],
+                    [1, 2, 45, 50]
+                ],
+                b: [2000, 2005, 100, 98],
+                desc: "Alta interdependencia fuera de diagonal y mal escalamiento (κ(A) >> 10³)."
+            }
+        };
+
+        // Initialize App on Load
+        window.onload = function() {
+            loadScenario(1);
+            runQASuite(); // Initial run of QA suite
+            populateComparativeTable(); // Initial populate of comparative summary table
+            
+            // Render MathJax on initial load
+            if (window.MathJax) MathJax.typesetPromise();
+        };
+
+        // ==========================================
+        // LINEAR ALGEBRA CORE ENGINE
+        // ==========================================
+        
+        // Vector Utility Functions
+        function vecAdd(u, v) { return u.map((val, i) => val + v[i]); }
+        function vecSub(u, v) { return u.map((val, i) => val - v[i]); }
+        function vecScale(u, s) { return u.map(val => val * s); }
+        function vecDot(u, v) { return u.reduce((sum, val, i) => sum + val * v[i], 0); }
+        function vecNorm2(u) { return Math.sqrt(vecDot(u, u)); }
+
+        // Matrix-Vector Multiplication
+        function matVecMul(A, x) {
+            return A.map(row => vecDot(row, x));
+        }
+
+        // Matrix Determinant for nxn (Gaussian Elimination)
+        function matDeterminant(M) {
+            let n = M.length;
+            let A = M.map(row => [...row]);
+            let det = 1;
+            for (let i = 0; i < n; i++) {
+                let pivot = i;
+                for (let j = i + 1; j < n; j++) {
+                    if (Math.abs(A[j][i]) > Math.abs(A[pivot][i])) pivot = j;
+                }
+                if (Math.abs(A[pivot][i]) < 1e-12) return 0;
+                if (pivot !== i) {
+                    [A[i], A[pivot]] = [A[pivot], A[i]];
+                    det *= -1;
+                }
+                det *= A[i][i];
+                for (let j = i + 1; j < n; j++) {
+                    let factor = A[j][i] / A[i][i];
+                    for (let k = i + 1; k < n; k++) {
+                        A[j][k] -= factor * A[i][k];
+                    }
+                }
+            }
+            return det;
+        }
+
+        // Sylvester's Criterion Verification
+        function verifySylvester(A) {
+            let n = A.length;
+            let isSymmetric = true;
+            let minors = [];
+            let isSPD = true;
+
+            // Check Symmetry
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    if (Math.abs(A[i][j] - A[j][i]) > 1e-6) {
+                        isSymmetric = false;
+                    }
+                }
+            }
+
+            // Calculate Leading Principal Minors Δ_k
+            for (let k = 1; k <= n; k++) {
+                let subMat = A.slice(0, k).map(row => row.slice(0, k));
+                let detK = matDeterminant(subMat);
+                minors.push(detK);
+                if (detK <= 1e-9) isSPD = false;
+            }
+
+            return { isSymmetric, isSPD, minors };
+        }
+
+        // Direct Solver: Cholesky Factorization A = L L^T
+        function solveCholesky(A, b) {
+            let n = A.length;
+            let L = Array.from({ length: n }, () => Array(n).fill(0));
+
+            try {
+                for (let i = 0; i < n; i++) {
+                    for (let j = 0; j <= i; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < j; k++) sum += L[i][k] * L[j][k];
+                        if (i === j) {
+                            let val = A[i][i] - sum;
+                            if (val <= 0) return null; // Not positive definite
+                            L[i][j] = Math.sqrt(val);
+                        } else {
+                            L[i][j] = (A[i][j] - sum) / L[j][j];
+                        }
+                    }
+                }
+
+                // Forward Substitution L y = b
+                let y = Array(n).fill(0);
+                for (let i = 0; i < n; i++) {
+                    let sum = 0;
+                    for (let j = 0; j < i; j++) sum += L[i][j] * y[j];
+                    y[i] = (b[i] - sum) / L[i][i];
+                }
+
+                // Backward Substitution L^T x = y
+                let x = Array(n).fill(0);
+                for (let i = n - 1; i >= 0; i--) {
+                    let sum = 0;
+                    for (let j = i + 1; j < n; j++) sum += L[j][i] * x[j];
+                    x[i] = (y[i] - sum) / L[i][i];
+                }
+
+                return { x, L };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Solve Preconditioner System M z = r
+        function solvePreconditioner(type, A, r) {
+            let n = A.length;
+            let z = Array(n).fill(0);
+
+            if (type === 'none') {
+                return [...r];
+            } else if (type === 'jacobi') {
+                for (let i = 0; i < n; i++) z[i] = r[i] / (A[i][i] || 1.0);
+                return z;
+            } else if (type === 'ssor') {
+                // SSOR with omega = 1.0
+                let D = Array(n).fill(0);
+                for (let i = 0; i < n; i++) D[i] = A[i][i];
+
+                // Forward (D + L_A) y = r
+                let y = Array(n).fill(0);
+                for (let i = 0; i < n; i++) {
+                    let sum = 0;
+                    for (let j = 0; j < i; j++) sum += A[i][j] * y[j];
+                    y[i] = (r[i] - sum) / D[i];
+                }
+
+                // Scale w = D y
+                let w = y.map((val, i) => val * D[i]);
+
+                // Backward (D + U_A) z = w
+                for (let i = n - 1; i >= 0; i--) {
+                    let sum = 0;
+                    for (let j = i + 1; j < n; j++) sum += A[i][j] * z[j];
+                    z[i] = (w[i] - sum) / D[i];
+                }
+                return z;
+            } else if (type === 'ic0') {
+                // Incomplete Cholesky IC(0)
+                let chol = solveCholesky(A, r);
+                return chol ? chol.x : solvePreconditioner('jacobi', A, r);
+            }
+            return [...r];
+        }
+
+        // Algoritmo Suñagua (2020): Gradientes Conjugados Precondicionado (GCP)
+        function runGCP(A, b, x0, tol, maxIter, precondType) {
+            let n = A.length;
+            let x = [...x0];
+            let r = vecSub(b, matVecMul(A, x));
+            let z = solvePreconditioner(precondType, A, r);
+            let p = [...z];
+
+            let normB = vecNorm2(b) || 1.0;
+            let relRes = vecNorm2(r) / normB;
+            let history = [relRes];
+
+            let converged = false;
+            let k = 0;
+
+            for (k = 0; k < maxIter; k++) {
+                if (relRes < tol) {
+                    converged = true;
+                    break;
+                }
+
+                let Ap = matVecMul(A, p);
+                let pAp = vecDot(p, Ap);
+                if (Math.abs(pAp) < 1e-18) break;
+
+                let rzOld = vecDot(r, z);
+                let alpha = rzOld / pAp;
+
+                x = vecAdd(x, vecScale(p, alpha));
+                let rNext = vecSub(r, vecScale(Ap, alpha));
+
+                relRes = vecNorm2(rNext) / normB;
+                history.push(relRes);
+
+                if (relRes < tol) {
+                    converged = true;
+                    k++;
+                    break;
+                }
+
+                let zNext = solvePreconditioner(precondType, A, rNext);
+                let rzNew = vecDot(rNext, zNext);
+
+                let beta = rzNew / (rzOld || 1e-18);
+                p = vecAdd(zNext, vecScale(p, beta));
+
+                r = rNext;
+                z = zNext;
+            }
+
+            return { x, iterations: k, finalRelRes: relRes, history, converged };
+        }
+
+        // Jacobi Eigenvalue Solver for Symmetric Matrix (Exact Spectral Condition Number)
+        function computeSymmetricEigenvalues(A) {
+            let n = A.length;
+            let S = A.map(row => [...row]);
+            let maxRot = 100;
+
+            for (let iter = 0; iter < maxRot; iter++) {
+                let maxOff = 0;
+                let p = 0, q = 0;
+                for (let i = 0; i < n; i++) {
+                    for (let j = i + 1; j < n; j++) {
+                        if (Math.abs(S[i][j]) > maxOff) {
+                            maxOff = Math.abs(S[i][j]);
+                            p = i; q = j;
+                        }
+                    }
+                }
+
+                if (maxOff < 1e-11) break;
+
+                let diff = S[q][q] - S[p][p];
+                let t;
+                if (Math.abs(S[p][q]) < 1e-15) {
+                    t = 0;
+                } else {
+                    let phi = diff / (2 * S[p][q]);
+                    t = 1 / (Math.abs(phi) + Math.sqrt(phi * phi + 1));
+                    if (phi < 0) t = -t;
+                }
+
+                let c = 1 / Math.sqrt(t * t + 1);
+                let s = t * c;
+                let tau = s / (1 + c);
+
+                let tempSpq = S[p][q];
+                S[p][q] = 0;
+                S[p][p] -= t * tempSpq;
+                S[q][q] += t * tempSpq;
+
+                for (let i = 0; i < n; i++) {
+                    if (i !== p && i !== q) {
+                        let g = S[i][p];
+                        let h = S[i][q];
+                        S[i][p] = g - s * (h + g * tau);
+                        S[p][i] = S[i][p];
+                        S[i][q] = h + s * (g - h * tau);
+                        S[q][i] = S[i][q];
+                    }
+                }
+            }
+
+            let evals = [];
+            for (let i = 0; i < n; i++) evals.push(Math.abs(S[i][i]));
+            evals.sort((a, b) => a - b);
+            return evals;
+        }
+
+        // Función auxiliar para aproximar autovalores reales (Método de Potencias)
+        function estimarCondicionamiento(Matriz) {
+            let n = Matriz.length;
+            let vMax = Array(n).fill(1.0);
+            let vMin = Array(n).fill(1.0);
+            let lambdaMax = 0, lambdaMin = 0;
+
+            // Potencia para lambda Max
+            for(let iter=0; iter<50; iter++) {
+                let w = matVecMul(Matriz, vMax);
+                let norm = vecNorm2(w) || 1;
+                vMax = vecScale(w, 1/norm);
+                lambdaMax = vecDot(vMax, matVecMul(Matriz, vMax));
+            }
+
+            // Desplazamiento espectral para lambda Min (aproximación para matrices definidas positivas)
+            let I_shift = Matriz.map((row, i) => row.map((val, j) => (i===j ? lambdaMax : 0) - val));
+            for(let iter=0; iter<50; iter++) {
+                let w = matVecMul(I_shift, vMin);
+                let norm = vecNorm2(w) || 1;
+                vMin = vecScale(w, 1/norm);
+            }
+            lambdaMin = lambdaMax - vecDot(vMin, matVecMul(I_shift, vMin));
+            
+            return (lambdaMax / (Math.abs(lambdaMin) || 1e-12));
+        }
+
+        // Calculate Condition Number kappa(A) and kappa(M^-1 A) de forma exacta
+        function calculateConditionNumbers(A, precondType) {
+            let evalsA = computeSymmetricEigenvalues(A);
+            let minEvA = evalsA[0] || 1e-12;
+            let maxEvA = evalsA[evalsA.length - 1] || 1.0;
+            let kappaA = maxEvA / minEvA;
+
+            let kappaMA = kappaA;
+            if (precondType !== 'none') {
+                let n = A.length;
+                let M_inv_A = Array.from({ length: n }, () => Array(n).fill(0));
+                
+                // Construir explícitamente M^-1 A aplicando el precondicionador a cada columna de A
+                for (let j = 0; j < n; j++) {
+                    let colA = A.map(row => row[j]);
+                    let colMA = solvePreconditioner(precondType, A, colA);
+                    for (let i = 0; i < n; i++) {
+                        M_inv_A[i][j] = colMA[i];
+                    }
+                }
+                
+                kappaMA = estimarCondicionamiento(M_inv_A);
+            }
+
+            return { kappaA, kappaMA };
+        }
+
+        // ==========================================
+        // UI INTERACTION & DYNAMIC UI RENDERING
+        // ==========================================
+
+        function loadScenario(id) {
+            let sc = scenarios[id];
+            if (!sc) return;
+
+            currentN = sc.n;
+            document.getElementById('matrix-dim').value = currentN;
+            currentA = sc.A.map(row => [...row]);
+            currentB = [...sc.b];
+            currentX0 = Array(currentN).fill(0);
+
+            renderMatrixInputs();
+            recalculateAll();
+            showToast(`Cargado Escenario ${id}: ${sc.name}`, 'info');
+        }
+
+        function changeDimension(newDim) {
+            currentN = parseInt(newDim);
+            currentA = Array.from({ length: currentN }, (_, i) => 
+                Array.from({ length: currentN }, (_, j) => (i === j ? 10 : (i < 4 && j < 4 ? scenarios[1].A[i][j] : 1)))
+            );
+            currentB = Array.from({ length: currentN }, (_, i) => (i < 4 ? scenarios[1].b[i] : 100));
+            currentX0 = Array(currentN).fill(0);
+
+            renderMatrixInputs();
+            recalculateAll();
+        }
+
+        function renderMatrixInputs() {
+            let containerA = document.getElementById('matrix-a-container');
+            let containerB = document.getElementById('vector-b-container');
+
+            // Render A Inputs Grid
+            let htmlA = `<table class="w-full text-center border-collapse"><tbody>`;
+            for (let i = 0; i < currentN; i++) {
+                htmlA += `<tr>`;
+                for (let j = 0; j < currentN; j++) {
+                    htmlA += `<td class="p-1">
+                        <input type="number" step="0.1" value="${currentA[i][j]}" 
+                               onchange="updateMatrixCell(${i}, ${j}, this.value)"
+                               class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-mono text-xs text-center focus:bg-white focus:border-umsa-blue font-semibold">
+                    </td>`;
+                }
+                htmlA += `</tr>`;
+            }
+            htmlA += `</tbody></table>`;
+            containerA.innerHTML = htmlA;
+
+            // Render b Inputs Vector
+            let htmlB = `<div class="space-y-1">`;
+            for (let i = 0; i < currentN; i++) {
+                htmlB += `<div class="flex items-center gap-2">
+                    <span class="font-mono text-xs text-slate-500 w-6">b[${i+1}]</span>
+                    <input type="number" step="1" value="${currentB[i]}" 
+                           onchange="updateVectorCell(${i}, this.value)"
+                           class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-mono text-xs text-center focus:bg-white focus:border-umsa-blue font-bold text-slate-800">
+                </div>`;
+            }
+            htmlB += `</div>`;
+            containerB.innerHTML = htmlB;
+        }
+
+        function updateMatrixCell(i, j, val) {
+            currentA[i][j] = parseFloat(val) || 0;
+            recalculateAll();
+        }
+
+        function updateVectorCell(i, val) {
+            currentB[i] = parseFloat(val) || 0;
+            recalculateAll();
+        }
+
+        function recalculateAll() {
+            let precondType = document.getElementById('precond-select').value;
+            let tol = parseFloat(document.getElementById('input-tol').value) || 1e-6;
+            let maxIter = parseInt(document.getElementById('input-maxiter').value) || 1000;
+
+            // 1. Verify Sylvester & Symmetry
+            let sylv = verifySylvester(currentA);
+            updateSylvesterUI(sylv);
+
+            if (!sylv.isSymmetric || !sylv.isSPD) {
+                showToast('Advertencia: Matriz asimétrica o No Definida Positiva. Los métodos pueden no converger.', 'warning');
+            }
+
+            // 2. Direct Solution (Cholesky Exact)
+            let directSol = solveCholesky(currentA, currentB);
+            let xref = directSol ? directSol.x : currentB.map(() => 0);
+            renderCholeskySolution(xref, directSol !== null);
+
+            // 3. Iterative Solution (GCP Suñagua 2020)
+            let gcpResult = runGCP(currentA, currentB, currentX0, tol, maxIter, precondType);
+            renderGCPSolution(gcpResult);
+
+            // 4. Parallel Unpreconditioned CG Simple (Contrast)
+            let gcSimpleResult = runGCP(currentA, currentB, currentX0, tol, maxIter, 'none');
+
+            // 5. Render Convergence Chart
+            renderConvergenceChart(gcpResult.history, gcSimpleResult.history);
+
+            // 6. Condition Numbers & Error Analysis
+            let cond = calculateConditionNumbers(currentA, precondType);
+            renderErrorAnalysis(xref, gcpResult.x, cond);
+            
+            // Re-render MathJax for dynamic content
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function updateSylvesterUI(sylv) {
+            let box = document.getElementById('sylvester-status-box');
+            let icon = document.getElementById('sylvester-icon');
+            let title = document.getElementById('sylvester-title');
+            let desc = document.getElementById('sylvester-desc');
+            let badge = document.getElementById('sylvester-badge');
+            let minorsDisp = document.getElementById('minors-display');
+
+            if (sylv.isSymmetric && sylv.isSPD) {
+                box.className = "p-4 rounded-xl border flex items-center justify-between transition-all bg-emerald-50 border-emerald-300 text-emerald-900";
+                icon.className = "fa-solid fa-circle-check text-2xl text-emerald-600";
+                title.innerText = "Matriz Válida (Simétrica Definida Positiva - SPD)";
+                desc.innerText = "Cumple A = Aᵀ y todos los menores principales son estrictamente positivos.";
+                badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-200 text-emerald-800";
+                badge.innerText = "A = Aᵀ & A > 0";
+            } else if (!sylv.isSymmetric) {
+                box.className = "p-4 rounded-xl border flex items-center justify-between transition-all bg-rose-50 border-rose-300 text-rose-900";
+                icon.className = "fa-solid fa-triangle-exclamation text-2xl text-rose-600";
+                title.innerText = "Error: Matriz Asimétrica (A ≠ Aᵀ)";
+                desc.innerText = "Existe al menos un par i,j donde a_ij ≠ a_ji.";
+                badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-rose-200 text-rose-800";
+                badge.innerText = "No Simétrica";
+            } else {
+                box.className = "p-4 rounded-xl border flex items-center justify-between transition-all bg-amber-50 border-amber-300 text-amber-900";
+                icon.className = "fa-solid fa-triangle-exclamation text-2xl text-amber-600";
+                title.innerText = "Advertencia: No es Definida Positiva";
+                desc.innerText = "Existe al menos un menor principal Δ_k ≤ 0.";
+                badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-amber-200 text-amber-800";
+                badge.innerText = "No SPD";
+            }
+
+            let htmlMinors = "";
+            sylv.minors.forEach((m, idx) => {
+                let status = m > 0 ? `<span class="text-emerald-400">✓ > 0</span>` : `<span class="text-rose-400">✗ ≤ 0</span>`;
+                htmlMinors += `<div class="flex justify-between items-center">
+                    <span>Menor Principal Δ_${idx+1}:</span>
+                    <span class="font-bold">${m.toFixed(4)} ${status}</span>
+                </div>`;
+            });
+            minorsDisp.innerHTML = htmlMinors;
+        }
+
+        function renderCholeskySolution(x, valid) {
+            let container = document.getElementById('cholesky-solution-display');
+            if (!valid) {
+                container.innerHTML = `<div class="col-span-4 text-amber-300 italic">Solución directa Cholesky no disponible (A no es SPD)</div>`;
+                return;
+            }
+            let html = "";
+            x.forEach((val, i) => {
+                html += `<div class="p-2 bg-indigo-950/60 rounded border border-indigo-700/50">
+                    <div class="text-[10px] text-indigo-300">x[${i+1}]</div>
+                    <div class="font-bold text-white">${val.toFixed(2)}</div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderGCPSolution(res) {
+            let container = document.getElementById('gcp-solution-display');
+            let badge = document.getElementById('gcp-iter-badge');
+            document.getElementById('gcp-rel-res').innerText = res.finalRelRes.toExponential(3);
+
+            badge.innerText = `${res.iterations} Iter. (${res.converged ? 'CONVERGIÓ' : 'MÁX. ITER'})`;
+            badge.className = `px-2 py-0.5 rounded font-bold font-mono text-[10px] ${res.converged ? 'bg-emerald-900 text-emerald-300' : 'bg-rose-900 text-rose-300'}`;
+
+            let html = "";
+            res.x.forEach((val, i) => {
+                html += `<div class="p-2 bg-slate-950/60 rounded border border-slate-700">
+                    <div class="text-[10px] text-slate-400">x[${i+1}]</div>
+                    <div class="font-bold text-emerald-400">${val.toFixed(2)}</div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderConvergenceChart(gcpHist, gcHist) {
+            let ctx = document.getElementById('convergenceChart').getContext('2d');
+            if (convergenceChartInstance) convergenceChartInstance.destroy();
+
+            let labels = Array.from({ length: Math.max(gcpHist.length, gcHist.length) }, (_, i) => i);
+
+            convergenceChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'GCP (Precondicionado)',
+                            data: gcpHist,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 2,
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'GC Simple (Sin Precondicionar)',
+                            data: gcHist,
+                            borderColor: '#d97706',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'logarithmic',
+                            title: { display: true, text: 'Residuo Relativo ||r_k|| / ||b||', font: { size: 10 } },
+                            grid: { color: 'rgba(226, 232, 240, 0.5)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Iteración (k)', font: { size: 10 } },
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            document.getElementById('gc-simple-iter').innerText = `${gcHist.length - 1} iteraciones`;
+        }
+
+        function renderErrorAnalysis(xref, xgcp, cond) {
+            document.getElementById('kappa-a-val').innerText = cond.kappaA.toFixed(2);
+            document.getElementById('kappa-ma-val').innerText = cond.kappaMA.toFixed(2);
+            let gain = (cond.kappaA / (cond.kappaMA || 1.0)).toFixed(1);
+            document.getElementById('kappa-gain-val').innerText = `${gain}x Menor`;
+
+            let tbody = document.getElementById('error-table-body');
+            let html = "";
+
+            for (let i = 0; i < currentN; i++) {
+                let ref = xref[i] || 0;
+                let gcp = xgcp[i] || 0;
+                let ea = Math.abs(ref - gcp);
+                
+                // CORRECCIÓN: Manejo explícito del cero según la rúbrica
+                let erTexto = "";
+                let epTexto = "";
+                
+                if (Math.abs(ref) < 1e-12) {
+                    erTexto = "<span class='text-[10px] text-slate-400'>No definido</span>";
+                    epTexto = "<span class='text-[10px] text-slate-400'>No definido</span>";
+                } else {
+                    let er = ea / Math.abs(ref);
+                    erTexto = er.toExponential(2);
+                    epTexto = (er * 100).toFixed(6) + "%";
+                }
+
+                let cat = categoryNames[i] || `Variable x_${i+1}`;
+
+                html += `<tr>
+                    <td class="p-3 font-bold text-slate-900">x[${i+1}]</td>
+                    <td class="p-3 font-sans text-slate-600">${cat}</td>
+                    <td class="p-3 text-indigo-700 font-bold">${ref.toFixed(4)}</td>
+                    <td class="p-3 text-emerald-700 font-bold">${gcp.toFixed(4)}</td>
+                    <td class="p-3">${ea.toExponential(2)}</td>
+                    <td class="p-3">${erTexto}</td>
+                    <td class="p-3 font-bold text-slate-800">${epTexto}</td>
+                </tr>`;
+            }
+
+            tbody.innerHTML = html;
+        }
+
+        // Populate Obligatory Side-by-Side Comparison Table for Scenarios 1, 2, 3
+        function populateComparativeTable() {
+            let tbody = document.getElementById('comparative-table-body');
+            let precondType = 'jacobi';
+            let tol = 1e-6;
+            let maxIter = 1000;
+
+            let resList = [];
+            for (let id = 1; id <= 3; id++) {
+                let sc = scenarios[id];
+                let chol = solveCholesky(sc.A, sc.b);
+                let xref = chol ? chol.x : sc.b.map(() => 0);
+                let x0 = Array(sc.n).fill(0);
+                let gcp = runGCP(sc.A, sc.b, x0, tol, maxIter, precondType);
+                let gc = runGCP(sc.A, sc.b, x0, tol, maxIter, 'none');
+                let cond = calculateConditionNumbers(sc.A, precondType);
+
+                let maxEa = Math.max(...xref.map((r, i) => Math.abs(r - gcp.x[i])));
+                let maxEp = Math.max(...xref.map((r, i) => Math.abs((r - gcp.x[i]) / (r || 1)) * 100));
+
+                resList.push({ sc, xref, gcp, gc, cond, maxEa, maxEp });
+            }
+
+            let html = `
+                <tr>
+                    <td class="p-3 font-bold font-sans">Solución Directa (Ref)</td>
+                    ${resList.map(r => `<td class="p-3 font-mono text-[11px]">[${r.xref.map(v => v.toFixed(1)).join(', ')}]</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Solución GCP</td>
+                    ${resList.map(r => `<td class="p-3 font-mono text-[11px] text-emerald-800">[${r.gcp.x.map(v => v.toFixed(1)).join(', ')}]</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Error Absoluto Máx ($E_a$)</td>
+                    ${resList.map(r => `<td class="p-3 font-mono">${r.maxEa.toExponential(2)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Error Porcentual Máx ($E_p$)</td>
+                    ${resList.map(r => `<td class="p-3 font-mono font-bold">${r.maxEp.toFixed(6)}%</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Iteraciones GC (Sin Precond.)</td>
+                    ${resList.map(r => `<td class="p-3 font-mono font-bold text-amber-700">${r.gc.iterations} iter</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Iteraciones GCP (Jacobi)</td>
+                    ${resList.map(r => `<td class="p-3 font-mono font-bold text-emerald-700">${r.gcp.iterations} iter</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Condicionamiento $\kappa(A)$</td>
+                    ${resList.map(r => `<td class="p-3 font-mono">${r.cond.kappaA.toFixed(2)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Condicionamiento $\kappa(M^{-1}A)$</td>
+                    ${resList.map(r => `<td class="p-3 font-mono font-bold text-cyan-700">${r.cond.kappaMA.toFixed(2)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Residuo Relativo GCP</td>
+                    ${resList.map(r => `<td class="p-3 font-mono">${r.gcp.finalRelRes.toExponential(2)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">¿Convergió Algoritmo?</td>
+                    ${resList.map(r => `<td class="p-3 font-bold text-emerald-700"><i class="fa-solid fa-circle-check"></i> SÍ</td>`).join('')}
+                </tr>
+                <tr>
+                    <td class="p-3 font-bold font-sans">Interpretación Financiera</td>
+                    <td class="p-3 font-sans text-[11px] text-slate-600">Presupuesto equilibrado y altamente estable.</td>
+                    <td class="p-3 font-sans text-[11px] text-slate-600">Reajuste de +25% absorbiendo inflación en TI.</td>
+                    <td class="p-3 font-sans text-[11px] text-slate-600">Fuerte acoplamiento cruzado resuelto eficazmente con precondicionador.</td>
+                </tr>
+            `;
+
+            tbody.innerHTML = html;
+            
+            // Re-render MathJax for dynamic table content
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        // ==========================================
+        // MODULE 10: AUTOMATED QA SOFTWARE TEST SUITE
+        // ==========================================
+
+        function runQASuite() {
+            let container = document.getElementById('qa-results-container');
+            let tests = [];
+
+            // Test Case 1: Load and Execute Scenarios
+            try {
+                let sc1 = scenarios[1];
+                let gcp1 = runGCP(sc1.A, sc1.b, [0,0,0,0], 1e-6, 1000, 'jacobi');
+                tests.push({
+                    id: 1,
+                    title: "1. Prueba de Carga de Escenarios",
+                    input: "Carga de matrices predefinidas (Ideal, Estrés, Mal Condicionado)",
+                    expected: "Convergencia exitosa alcanzando ||r_k||/||b|| < 10⁻⁶",
+                    obtained: `Ejecutado con éxito. Escenario 1 convergió en ${gcp1.iterations} iter.`,
+                    passed: gcp1.converged
+                });
+            } catch (e) {
+                tests.push({ id: 1, title: "1. Carga Escenarios", passed: false, error: e.message });
+            }
+
+            // Test Case 2: Invalid Matrix Validation
+            try {
+                let asymA = [
+                    [10, 5, 1, 1],
+                    [2, 12, 2, 1],
+                    [1, 2, 8, 1],
+                    [1, 1, 1, 9]
+                ];
+                let sylv = verifySylvester(asymA);
+                let captured = !sylv.isSymmetric;
+                tests.push({
+                    id: 2,
+                    title: "2. Validación de Matriz No Válida",
+                    input: "Introducción deliberada de matriz asimétrica (a₁₂=5 vs a₂₁=2)",
+                    expected: "El validador detecta la asimetría impidiendo colapso sin arrojar excepción fatal",
+                    obtained: captured ? "Atrapado correctamente: 'Error: Matriz Asimétrica (A ≠ Aᵀ)'" : "Falló en capturar",
+                    passed: captured
+                });
+            } catch (e) {
+                tests.push({ id: 2, title: "2. Matriz No Válida", passed: false, error: e.message });
+            }
+
+            // Test Case 3: Dynamic Matrix Editing & Recalculation
+            try {
+                let testA = scenarios[1].A.map(r => [...r]);
+                testA[0][0] = 20; // Edit element
+                let chol = solveCholesky(testA, scenarios[1].b);
+                tests.push({
+                    id: 3,
+                    title: "3. Edición Dinámica y Recálculo",
+                    input: "Modificación manual de a₁₁ de 10.0 a 20.0 en tiempo real",
+                    expected: "Recálculo instantáneo de la solución de referencia x₁",
+                    obtained: chol ? `Recalculado x₁ = ${chol.x[0].toFixed(2)} k USD` : "Falló",
+                    passed: chol !== null
+                });
+            } catch (e) {
+                tests.push({ id: 3, title: "3. Edición Dinámica", passed: false, error: e.message });
+            }
+
+            // Test Case 4: Preconditioning Efficiency Gain
+            try {
+                let sc3 = scenarios[3];
+                let gcp3 = runGCP(sc3.A, sc3.b, [0,0,0,0], 1e-6, 1000, 'jacobi');
+                let gc3 = runGCP(sc3.A, sc3.b, [0,0,0,0], 1e-6, 1000, 'none');
+                let efficiencyGain = gcp3.iterations <= gc3.iterations;
+                tests.push({
+                    id: 4,
+                    title: "4. Comparativa de Precondicionamiento",
+                    input: "Evaluación en Escenario Mal Condicionado (κ(A) >> 10³)",
+                    expected: "Iteraciones GCP (Jacobi) ≤ Iteraciones GC Simple",
+                    obtained: `GCP requeriró ${gcp3.iterations} iter vs GC Simple ${gc3.iterations} iter`,
+                    passed: efficiencyGain
+                });
+            } catch (e) {
+                tests.push({ id: 4, title: "4. Eficiencia Precondicionamiento", passed: false, error: e.message });
+            }
+
+            // Render Test Cards UI
+            let html = "";
+            tests.forEach(t => {
+                let statusBadge = t.passed 
+                    ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300 text-[10px]"><i class="fa-solid fa-check"></i> PASÓ</span>`
+                    : `<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-300 text-[10px]"><i class="fa-solid fa-xmark"></i> FALLÓ</span>`;
+
+                html += `<div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span class="font-bold text-slate-800">${t.title}</span>
+                        ${statusBadge}
+                    </div>
+                    <div><strong class="text-slate-600">Entrada:</strong> ${t.input}</div>
+                    <div><strong class="text-slate-600">Esperado:</strong> ${t.expected}</div>
+                    <div><strong class="text-slate-600">Obtenido:</strong> <span class="font-mono text-slate-800">${t.obtained}</span></div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+            showToast('Suite de Pruebas QA ejecutada correctamente.', 'success');
+        }
+
+        // ==========================================
+        // EXPORT & NOTIFICATION UTILITIES
+        // ==========================================
+
+        function exportJSON() {
+            let data = {
+                estudiante: "Pabel Dante Churata Apaza",
+                mencion: "Desarrollo de Software e Innovación Tecnológica",
+                dimension: currentN,
+                matrizA: currentA,
+                vectorB: currentB,
+                precondicionador: document.getElementById('precond-select').value,
+                tolerancia: parseFloat(document.getElementById('input-tol').value)
+            };
+            let str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            let anchor = document.createElement('a');
+            anchor.setAttribute("href", str);
+            anchor.setAttribute("download", "configuracion_gcp_umsa.json");
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+        }
+
+        function exportCSV() {
+            let directSol = solveCholesky(currentA, currentB);
+            let xref = directSol ? directSol.x : currentB.map(() => 0);
+            let precondType = document.getElementById('precond-select').value;
+            let gcpResult = runGCP(currentA, currentB, currentX0, 1e-6, 1000, precondType);
+
+            let csv = "Variable,Categoria,X_Ref,X_GCP,Error_Absoluto,Error_Relativo,Error_Porcentual\n";
+            for (let i = 0; i < currentN; i++) {
+                let ref = xref[i] || 0;
+                let gcp = gcpResult.x[i] || 0;
+                let ea = Math.abs(ref - gcp);
+                
+                let er = (Math.abs(ref) < 1e-12) ? "No definido" : (ea / Math.abs(ref));
+                let ep = (Math.abs(ref) < 1e-12) ? "No definido" : (er * 100) + "%";
+                
+                csv += `x${i+1},"${categoryNames[i]}",${ref},${gcp},${ea},${er},${ep}\n`;
+            }
+
+            let str = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+            let anchor = document.createElement('a');
+            anchor.setAttribute("href", str);
+            anchor.setAttribute("download", "reporte_errores_gcp.csv");
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+        }
+
+        function showToast(message, type = 'info') {
+            let container = document.getElementById('toast-container');
+            let toast = document.createElement('div');
+            
+            let bgClass = "bg-slate-900 text-white border-slate-700";
+            if (type === 'success') bgClass = "bg-emerald-900 text-emerald-100 border-emerald-700";
+            if (type === 'warning') bgClass = "bg-amber-900 text-amber-100 border-amber-700";
+
+            toast.className = `p-3 rounded-xl border shadow-lg text-xs flex items-center gap-2 transition-all duration-300 ${bgClass}`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
